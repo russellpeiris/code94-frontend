@@ -10,9 +10,8 @@ import { deleteProduct, getProducts } from '../../store/reducer';
 const Products = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const products = useSelector((state: any) => {
-    return state.product.products.products;
-  });
+  const products = useSelector((state: any) => state.product.allProducts.products);
+
   useEffect(() => {
     dispatch(getProducts());
   }, []);

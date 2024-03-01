@@ -3,7 +3,10 @@ import axios from 'axios';
 import { ADD_PRODUCT, DELETE_PRODUCT, GET_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, UPLOAD_IMAGE } from './actionTypes';
 
 const initialState = {
-  products: [],
+  allProducts: [],
+  singleProduct: {},
+  productImages: [],
+  newProduct: {},
 };
 
 export const productReducer = (state = initialState, action: any) => {
@@ -11,32 +14,32 @@ export const productReducer = (state = initialState, action: any) => {
     case ADD_PRODUCT:
       return {
         ...state,
-        product: action.payload === true ? [] : action.payload,
+        newProduct: action.payload,
       };
     case GET_PRODUCTS:
       return {
         ...state,
-        products: action.payload === true ? [] : action.payload,
+        allProducts: action.payload,
       };
     case GET_PRODUCT:
       return {
         ...state,
-        product: action.payload === true ? [] : action.payload,
+        singleProduct: action.payload,
       };
     case UPLOAD_IMAGE:
       return {
         ...state,
-        image: action.payload === true ? [] : action.payload,
+        productImages: action.payload,
       };
     case DELETE_PRODUCT:
       return {
         ...state,
-        deleteProduct: action.payload === true ? [] : action.payload,
+        deleteProduct: action.payload,
       };
     case UPDATE_PRODUCT:
       return {
         ...state,
-        updateProduct: action.payload === true ? [] : action.payload,
+        updateProduct: action.payload,
       };
     default:
       return state;

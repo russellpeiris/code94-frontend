@@ -13,16 +13,21 @@ interface Props {
 const ProductForm: FC<Props> = ({ isEditing }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const imageURLs = useSelector((state: any) => {
-    return state.product.image?.productImages;
-  });
-  const initialValues = useSelector((state: any) => {
-    return state.product.product?.product;
-  });
+  const imageURLs = useSelector((state: any) => state.product.productImages.productImages);
+  const initialValues = useSelector((state: any) => state.product.singleProduct.product);
   const { sku } = useParams();
 
   const images: { file: File }[] = [];
 
+  const handleSubmit =async (values: any) => {
+    values.productImages = imageURLs;
+      if (isEditing) {
+        dispatch(updateProduct({ ...values, sku }));
+      } else {
+        dispatch(postProduct(values));
+      }
+
+  };
   useEffect(() => {
     if (isEditing && sku) {
       dispatch(getProduct(sku));
@@ -35,21 +40,16 @@ const ProductForm: FC<Props> = ({ isEditing }) => {
     }
   }, [initialValues]);
 
-  const handleSubmit = (values: any) => {
-    dispatch(uploadImage(images));
-    values.productImages = imageURLs;
-    if (isEditing) {
-      dispatch(updateProduct({ ...values, sku }));
-      return;
-    } else dispatch(postProduct(values));
-  };
 
-  const handleImageUpload = (files: FileList | null): void => {
+  
+
+  const handleImageUpload = async (files: FileList | null): Promise<void> => {
     if (files?.length) {
       for (let i = 0; i < files.length; i++) {
         images.push({ file: files[i] });
       }
     }
+     await dispatch(uploadImage(images))
   };
 
   return (
@@ -89,6 +89,18 @@ const ProductForm: FC<Props> = ({ isEditing }) => {
           <Col span={8}>
             <Form.Item name="productImages" rules={[{ required: false, message: 'Please input Images!' }]}>
               <FileUpload onFileChanged={(e) => handleImageUpload(e)} label="Product Images" />
+              { form.getFieldValue('productImages')?.length > 0 && (
+                <Flex style={{ gap: '12px' }}>
+                  {form.getFieldValue('productImages').map((imageUrl: string, index: number) => (
+                    <img
+                      key={index}
+                      src={imageUrl}
+                      style={{ width: '50px', height: '50px', marginRight: '5px' }}
+                    />
+                  ))}
+                </Flex>
+              )
+              }
             </Form.Item>
           </Col>
         </Row>
