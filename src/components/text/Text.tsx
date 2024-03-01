@@ -23,21 +23,21 @@ const getStyleFontType = (type: FontTypes) => {
   switch (type) {
     case 'text-xl':
       return `
-    font-size: 2.5rem;
-    font-weight: 600;
-    line-height: normal;
-    `;
+        font-size: 2.25rem;
+        line-height: 3.038rem;
+        font-family: Satoshi-Black;
+      `;
     case 'text-large':
       return `
     font-weight: 700;
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: 1.5rem;
+    line-height: 2.025rem;
     `;
     case 'text-default':
       return `
-    font-size: 0.875rem;
-    font-weight: 400;
-    line-height: normal;
+    font-size: 1.1875rem;
+    font-weight: 500;
+    line-height: 1.603rem;
     `;
     case 'text-small':
       return `

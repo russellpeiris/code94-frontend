@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Flex } from '../components';
 import { FlexBoxProps } from '../components/flex/Flex';
 
-interface Props extends FlexBoxProps{
+interface Props extends FlexBoxProps {
   children: React.ReactNode;
 }
 

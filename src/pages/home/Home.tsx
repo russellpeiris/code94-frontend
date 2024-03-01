@@ -1,9 +1,7 @@
-import { Screen } from '../../layout/Screen'
+import { Screen } from '../../layout/Screen';
 
 const Home = () => {
-  return (
-    <Screen>Home</Screen>
-  )
-}
+  return <Screen>Home</Screen>;
+};
 
-export default Home
+export default Home;

@@ -1,14 +1,15 @@
+import { SearchOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Input, InputProps } from 'antd';
+import { Input } from 'antd';
 import { FC } from 'react';
 import { Flex } from '..';
-import { PrimaryButton } from '../buttons/PrimaryButton';
-import { SearchOutlined } from '@ant-design/icons';
+import { PrimaryButton } from '../buttons/Buttons';
 
-type SearchBarProps = 
-InputProps & {
-  buttonClick?: () => void;
-}
+type SearchBarProps = {
+  placeholder?: string;
+  onChange?: (e: any) => void;
+  triggerClick?: () => void;
+};
 const StyledSearch = styled(Input)`
   width: 757px;
   height: 64px;
@@ -19,9 +20,21 @@ const StyledSearch = styled(Input)`
 `;
 
 export const SearchBar: FC<SearchBarProps> = ({ ...props }) => {
+  const { triggerClick, placeholder, onChange } = props;
   return (
     <Flex alignItems={'center'} justifyContent={'center'}>
-      <StyledSearch {...props} suffix={<PrimaryButton icon={<SearchOutlined/>} style={{height:'45px', borderRadius: '50px', width: '180px'}} onClick={props.buttonClick} buttontext='Search'/>}/>
+      <StyledSearch
+        onChange={onChange}
+        placeholder={placeholder}
+        suffix={
+          <PrimaryButton
+            icon={<SearchOutlined />}
+            style={{ height: '45px', borderRadius: '50px', width: '180px' }}
+            onClick={triggerClick}
+            buttontext="Search"
+          />
+        }
+      />
     </Flex>
   );
 };
