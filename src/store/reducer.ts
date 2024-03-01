@@ -1,12 +1,23 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { ADD_PRODUCT, DELETE_PRODUCT, GET_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, UPLOAD_IMAGE } from './actionTypes';
+import {
+  ADD_PRODUCT,
+  ADD_TO_FAVORITE,
+  DELETE_PRODUCT,
+  GET_PRODUCT,
+  GET_PRODUCTS,
+  SEARCH,
+  UPDATE_PRODUCT,
+  UPLOAD_IMAGE,
+} from './actionTypes';
 
 const initialState = {
   allProducts: [],
   singleProduct: {},
   productImages: [],
   newProduct: {},
+  favoriteProducts: [],
+  search: [],
 };
 
 export const productReducer = (state = initialState, action: any) => {
@@ -40,6 +51,16 @@ export const productReducer = (state = initialState, action: any) => {
       return {
         ...state,
         updateProduct: action.payload,
+      };
+    case ADD_TO_FAVORITE:
+      return {
+        ...state,
+        favoriteProducts: action.payload,
+      };
+    case SEARCH:
+      return {
+        ...state,
+        search: action.payload,
       };
     default:
       return state;
@@ -126,6 +147,30 @@ export function updateProduct(values: any): any {
       dispatch({ type: UPDATE_PRODUCT, payload: true });
       const res = await axios.put(`/products/update-product/${values.sku}`, values);
       dispatch({ type: UPDATE_PRODUCT, payload: res.data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function addToFavorites(sku: string): any {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: ADD_TO_FAVORITE, payload: true });
+      const res = await axios.post(`/products/add-to-favorites/${sku}`);
+      dispatch({ type: ADD_TO_FAVORITE, payload: res.data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function searchProduct(sku: string): any {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: SEARCH, payload: true });
+      const res = await axios.get(`/products/search-product/${sku}`);
+      dispatch({ type: SEARCH, payload: res.data });
     } catch (error) {
       console.error(error);
     }

@@ -6,9 +6,10 @@ import { Flex } from '..';
 import { PrimaryButton } from '../buttons/Buttons';
 
 type SearchBarProps = {
+  searchTerm: string
   placeholder?: string;
   onChange?: (e: any) => void;
-  triggerClick?: () => void;
+  onClick?: (e: any) => void;
 };
 const StyledSearch = styled(Input)`
   width: 757px;
@@ -20,17 +21,16 @@ const StyledSearch = styled(Input)`
 `;
 
 export const SearchBar: FC<SearchBarProps> = ({ ...props }) => {
-  const { triggerClick, placeholder, onChange } = props;
+const { onClick, ...other } = props
   return (
     <Flex alignItems={'center'} justifyContent={'center'}>
       <StyledSearch
-        onChange={onChange}
-        placeholder={placeholder}
+        {...props}
         suffix={
           <PrimaryButton
             icon={<SearchOutlined />}
             style={{ height: '45px', borderRadius: '50px', width: '180px' }}
-            onClick={triggerClick}
+            onClick={onClick} // Triggering search when the button is clicked
             buttontext="Search"
           />
         }

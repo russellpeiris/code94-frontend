@@ -4,7 +4,11 @@ import { Link, Location, useLocation } from 'react-router-dom';
 import { Text } from '..';
 import { ArrowIcon } from '../../assets';
 
-export const BreadCrumb: FC = () => {
+type BreadCrumbProps = {
+  filter?: boolean;
+};
+
+export const BreadCrumb: FC<BreadCrumbProps> = ({filter}) => {
   const getBreadcrumbItems = (location: Location<any>) => {
     const paths = location.pathname.split('/').filter(Boolean); // Filter out empty strings
     const items = paths.map((path, index) => {
@@ -15,7 +19,7 @@ export const BreadCrumb: FC = () => {
           key: index,
           label: (
             <Text type="text-xl">
-              <Link to={`/products`}>PRODUCTS</Link>
+              <Link to={`/products`}>{filter ? 'FAVORITE PRODUCTS' : 'PRODUCTS'}</Link>
             </Text>
           ),
         };
