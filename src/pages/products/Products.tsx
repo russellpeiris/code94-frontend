@@ -4,9 +4,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { DeleteIcon, EditIcon, StarIcon } from '../../assets';
-import { Flex, SearchBar } from '../../components';
-import { BreadCrumb } from '../../components/breadCrumb/BreadCrumb';
-import { PrimaryButton, SecondaryButton } from '../../components/buttons/Buttons';
+import { BreadCrumb, Flex, PrimaryButton, SearchBar, SecondaryButton } from '../../components';
 import { Screen } from '../../layout/Screen';
 import { deleteProduct, getProducts } from '../../store/reducer';
 const Products = () => {

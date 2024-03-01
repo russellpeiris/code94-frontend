@@ -23,7 +23,6 @@ export const productReducer = (state = initialState, action: any) => {
         ...state,
         product: action.payload === true ? [] : action.payload,
       };
-
     case UPLOAD_IMAGE:
       return {
         ...state,
@@ -39,7 +38,6 @@ export const productReducer = (state = initialState, action: any) => {
         ...state,
         updateProduct: action.payload === true ? [] : action.payload,
       };
-
     default:
       return state;
   }
@@ -112,8 +110,19 @@ export function getProduct(sku: string): any {
     try {
       dispatch({ type: GET_PRODUCT, payload: true });
       const res = await axios.get(`/products/get-product/${sku}`);
-      console.log('res :', res);
       dispatch({ type: GET_PRODUCT, payload: res.data });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+}
+
+export function updateProduct(values: any): any {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch({ type: UPDATE_PRODUCT, payload: true });
+      const res = await axios.put(`/products/update-product/${values.sku}`, values);
+      dispatch({ type: UPDATE_PRODUCT, payload: res.data });
     } catch (error) {
       console.error(error);
     }

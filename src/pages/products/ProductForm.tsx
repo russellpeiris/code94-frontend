@@ -2,13 +2,9 @@ import { Col, Form, Row } from 'antd';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Flex } from '../../components';
-import { BreadCrumb } from '../../components/breadCrumb/BreadCrumb';
-import { PrimaryButton } from '../../components/buttons/Buttons';
-import { FileUpload } from '../../components/inputs/FileUpload';
-import { InputBox } from '../../components/inputs/InputBox';
+import { BreadCrumb, FileUpload, Flex, InputBox, PrimaryButton } from '../../components';
 import { Screen } from '../../layout/Screen';
-import { getProduct, postProduct, uploadImage } from '../../store/reducer';
+import { getProduct, postProduct, updateProduct, uploadImage } from '../../store/reducer';
 
 interface Props {
   isEditing?: boolean;
@@ -42,7 +38,10 @@ const ProductForm: FC<Props> = ({ isEditing }) => {
   const handleSubmit = (values: any) => {
     dispatch(uploadImage(images));
     values.productImages = imageURLs;
-    dispatch(postProduct(values));
+    if (isEditing) {
+      dispatch(updateProduct({ ...values, sku }));
+      return;
+    } else dispatch(postProduct(values));
   };
 
   const handleImageUpload = (files: FileList | null): void => {
